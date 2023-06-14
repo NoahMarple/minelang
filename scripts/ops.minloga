@@ -1,0 +1,19 @@
+draw clear 0 0 0 0 0 0
+drawflush display1
+printflush message1
+getlink result 0
+control enabled block1 0 0 0 0
+radar enemy any any distance turret1 1 result
+sensor result block1 @copper
+set result 0
+op add result a b
+lookup item result 0
+packcolor result 1 0 0 1
+wait 0.5
+stop
+end
+jump -1 notEqual x false
+ubind @poly
+ucontrol move 0 0 0 0 0
+uradar enemy any any distance 0 1 result
+ulocate building core true @copper outx outy found building

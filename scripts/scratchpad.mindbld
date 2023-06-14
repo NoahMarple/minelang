@@ -1,0 +1,11 @@
+import: admin
+
+
+
+cmp-flag-if: "do-permissionFailTest" do(
+    cmp-flag-set("admin-hasCookies","YES! yumm")
+    cmp-flag-setEntry("policy-flag-write","nobody-ever",8);
+    cmp-flag-set("nobody-ever",0)
+)
+
+

@@ -1,0 +1,17 @@
+import: universal-ops macross 
+
+
+l := complex(
+    get-open= (print( "open" ) "value out")
+    get-close= print: "close"
+    
+    set-to= v
+    set-open= ( print( "settey!" ) reg())
+    set-close= print( v )
+)
+
+"AAAAAAAAAAAAAAAA"
+
+l = 7
+
+void()

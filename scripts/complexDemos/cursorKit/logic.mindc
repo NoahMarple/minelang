@@ -1,0 +1,11 @@
+import: universal-ops macross bare-metal mindustry debugging
+
+add := macross(a,b): asem: word op word add return getter a getter b
+or := macross(a,b): asem: word op word or return getter a getter b
+setEnabled := macross(target state): asem: word control word enabled getter target getter state 
+getEnabled := macross(target): sensor(target @enabled)
+
+@cursorKit-api = var-raw(cell1)
+
+import("./headers.mindc")
+

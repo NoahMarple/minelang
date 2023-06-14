@@ -1,0 +1,16 @@
+import: universal-ops macross bare-metal
+
+
+zell := macross(key)( complex(
+    get-open= asem( word zell word read return getter key )
+    get-close=()
+    
+    set-to= v
+    set-open= reg()
+    set-close= asem( word zell word write getter v getter key )
+))
+
+
+zell(7) = zell(9)
+
+void()

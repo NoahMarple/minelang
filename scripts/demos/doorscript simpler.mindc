@@ -1,0 +1,18 @@
+import: mindustry universal-ops macross bare-metal
+
+get-player := macross(tower): asem: word radar word ally word ground word any word distance getter tower word 1 return
+and := macross(a,b): asem: word op word and return getter a getter b
+or := macross(a,b): asem: word op word or return getter a getter b
+set-enabled := macross(thing,state): asem: word control word enabled getter thing getter state
+
+
+towerTL := var-raw(scorch1)
+towerBL := var-raw(scorch2)
+door := var-raw("door1")
+
+set-enabled(door, and(
+    get-player(towerTL)
+    get-player(towerBL)
+))
+
+

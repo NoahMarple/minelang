@@ -1,0 +1,11 @@
+import: universal-ops debugging
+
+anonGZ := globalz() 
+print: "anon globalz " anonGZ
+
+namedGZ := globalz(helloImGlobalz)
+print: "named globalz " namedGZ
+
+print: "implicit  globalz" @implicitGZ
+
+void()

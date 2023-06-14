@@ -1,0 +1,83 @@
+import: universal-ops macross bare-metal mindustry
+
+
+//asem
+void(
+    add := macross(a,b): asem: word op word add return getter a getter b
+    mod := macross(a,b): asem: word op word mod return getter a getter b
+    or := macross(a,b): asem: word op word or return getter a getter b
+    set-enabled := macross(target state): asem: word control word enabled getter target getter state
+    get-enabled := macross(target): sensor(target @enabled)
+    printflush := macross(apon): asem: word printflush getter apon
+    define := macross(thing): thing = thing
+)
+
+
+
+
+
+indicator := var-raw(indicator) = var-raw(sorter1)
+button := var-raw(button) = var-raw(switch1)
+message := var-raw(message) = var-raw(message1)
+
+false := var-raw(false);
+true := var-raw(true);
+
+mode_main := 0;
+mode_another := 1;
+mode_yet_another := 2;
+
+modeMax := 3;
+mode := var-raw(mode) = mode_main;
+
+callback := var-raw(callback)
+
+printflushMain := macross(): printflush: message
+
+inited := var-raw(inited)
+
+doModeTrapCommon := macross()(
+    callback = add(@counter,2);
+    jmp: @modeTrapCommon;
+    //var callback would be here/next real instruction
+)
+
+jmp: @modeTrapEnter
+
+do(
+    lbl: @modeTrapCommon
+    
+    if: eq(get-enabled(button),false) do(
+        mode = mod(add(mode,1),modeMax)
+        set-enabled(button true);
+        print: "mode now" mode
+        printflushMain()
+    )
+    jmp: callback;
+)
+
+lbl: @modeTrapEnter
+if: eq(mode,mode_main) child-scope(
+    lbl: loopTop
+    doModeTrapCommon()
+
+
+    jmp: loopTop
+) if: eq(mode,mode_another) child-scope(
+    lbl: loopTop
+    doModeTrapCommon()
+
+
+    jmp: loopTop
+) if: eq(mode,mode_yet_another) child-scope(
+    lbl: loopTop
+    doModeTrapCommon()
+
+
+    jmp: loopTop
+) 
+jmp: @modeTrapEnter
+
+
+
+

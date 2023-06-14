@@ -1,0 +1,11 @@
+import: universal-ops bare-metal
+
+button := var-raw(switch1);
+
+goodness := asem (word sensor return getter button getter @enabled );
+
+true := var-raw(true)
+
+print: "pie is quite " if( eq(goodness true) "good" "bad");
+
+asem: word printflush getter var-raw(message1)

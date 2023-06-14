@@ -1,0 +1,131 @@
+import: universal-ops macross bare-metal mindustry
+
+
+//import primitive macros
+void(
+    add := macross(a,b): asem: word op word add return getter a getter b
+    mod := macross(a,b): asem: word op word mod return getter a getter b
+    or := macross(a,b): asem: word op word or return getter a getter b
+    set-enabled := macross(target state): asem: word control word enabled getter target getter state
+    get-enabled := macross(target): sensor(target @enabled)
+    link-at := macross(id): asem: word return getter id
+)
+
+
+//declare constants and vars
+indicator := var-raw(indicator) = var-raw(sorter1)
+button := var-raw(button) = var-raw(switch1)
+message := var-raw(message) = var-raw(message1)
+linkFirst := 3
+
+false := var-raw(false);
+true := var-raw(true);
+
+//IDEA: mabe this is how Ill make enums
+//IDEA: enum(mode,disabled,normalAI,locked,locateMaster);
+
+//declare mode types
+mode_disabled := 0; modeName_disabled := "[red]turret disabled[]"; modeColor_disabled := @blast-compound;
+mode_normalAI := 1; modeName_normalAI := "[yellow]turret AI used[]"; modeColor_normalAI := @surge-alloy;
+mode_locked := 2; modeName_locked := "[green]turret locked[]"; modeColor_locked := @plastanium;
+mode_locateMaster := 3; modeName_locateMaster := "[purple]pointing at pilotalbe turret[]"; modeColor_locateMaster := @thorium; 
+
+//declare special mode type
+name_piloting := "[purple]piloting[]"; color_piloting := @thorium;
+
+//set vars and constants
+modeMax := 4;
+mode := var-raw(mode) = mode_disabled;
+modeLabel := var-raw(modeLabel) = modeName_disabled;
+
+callback := var-raw(callback)
+
+//specific macros
+printflushMain := macross(): print-flush: var-raw: message1
+set-indicator := macross(matt): asem: word control word config getter indicator getter matt
+
+
+//await setup 
+child-scope(
+    x := reg( link-at(linkFirst) )
+    asem: word jump getter @modeTrapEnter word equal 
+)
+
+void( //rutine do mode trap common
+
+doModeTrapCommon := macross()(
+    callback = add(@counter,2);
+    jmp: @modeTrapCommon;
+    //var callback would be here/next real instruction
+)
+
+//returning
+do(
+    lbl: @modeTrapCommon
+    
+    if: eq(get-enabled(button),false) do(
+        mode = mod(add(mode,1),modeMax)
+        set-enabled(button true);
+    )
+    jmp: callback;
+)
+
+)
+
+//non returning, mode traps
+lbl: @modeTrapEnter
+if: eq(mode,mode_disabled) child-scope(
+    print: modeName_disabled
+    printflushMain()
+    set-indicator(modeColor_disabled)
+    (
+        lbl: loopTop
+        doModeTrapCommon()
+
+
+        jmp: loopTop
+    )
+) if: eq(mode,mode_normalAI) child-scope(
+    print: modeName_normalAI
+    printflushMain()
+    set-indicator(modeColor_normalAI)
+    (
+    lbl: loopTop
+    doModeTrapCommon()
+
+
+    jmp: loopTop
+    )
+) if: eq(mode,mode_locked) child-scope(
+    print: modeName_locked
+    printflushMain()
+    set-indicator(modeColor_locked)
+    (
+    lbl: loopTop
+    doModeTrapCommon()
+
+
+    jmp: loopTop
+    )
+) if: eq(mode,mode_locateMaster) child-scope(
+    print: modeName_locateMaster
+    printflushMain()
+    set-indicator(modeColor_locateMaster)
+    (
+    lbl: loopTop
+    doModeTrapCommon()
+
+
+    jmp: loopTop
+    )
+) 
+
+jmp: @modeTrapEnter
+
+
+
+lbl: @pilotingUnit
+
+
+
+

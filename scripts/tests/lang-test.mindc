@@ -1,0 +1,14 @@
+operation();
+
+impl-operation()
+
+
+impl-setter=getter
+setter=getter;
+
+operation( colonOP: arg )
+
+
+
+
+finally

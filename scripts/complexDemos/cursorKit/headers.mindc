@@ -1,0 +1,8 @@
+import: universal-ops macross bare-metal mindustry
+
+parent-scope(
+    @cursorKit-updateFlag := cell(@cursorKit-api 1)
+    @cursorKit-mousex     := cell(@cursorKit-api 2)
+    @cursorKit-mousey     := cell(@cursorKit-api 3)
+    @cursorKit-mouseDown  := cell(@cursorKit-api 4)
+)

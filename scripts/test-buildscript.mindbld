@@ -1,0 +1,22 @@
+import: admin bare-metal debugging universal-ops
+
+cmp-print: new-set(0 1 2 3);
+
+
+//asem: word "hello!"
+
+
+cmp-action("cmp","macross");
+
+print: "hi"
+cmp-action("write-stop","");
+print: "ho"
+
+
+cmp-print: dump-scope();
+
+cmp-flag-addEntry("do-next","output-screen");
+
+cmp-print(cmp-flag-get("do"))
+
+//cmp-set-flag("")

@@ -1,0 +1,98 @@
+name := var-meta: "do_laundry";
+
+
+hasCloths := funct(): sensor("floor clothes bool");
+getFirstCloth := funct(): sensor("floor clothes first");
+
+while(hasCloths(),(
+    cloth := getFirstCloth()
+    to-hands(cloth);
+    to-washer(cloth);
+))
+
+import(debugging,universal-ops);
+
+a := reg(reg())
+a = 7
+
+
+lbl: @hi
+print: "lol:" @hi
+jmp: @hi
+
+var-raw(hellen) = if: eq(1,@jhon) null /*print("bad boys",0,2)*/ print(1 "e" "r")
+
+
+import(debugging,universal-ops,bare-metal,macross);
+
+
+
+//asem(word set setter target getter src)
+
+sevzip := var-raw(sevzip) //funny basic declare
+
+//asem(word set setter sevzip getter 0)
+
+//mam := macross(julio uni-wa nagi-sa): macross-resolve();  
+
+
+//a := unevaluated((print("hi! im 'a'"); "its a"));
+
+//print(a)
+//print(a)
+
+//prepare(a);
+
+mam := macross(a): prepare(a) cmp-print(a)
+
+mam(7)
+
+//void: print("hi");
+//debugger()
+
+//cmp-print: a
+
+//cmp-print: unAST( cali(@a := 7 9 5) )
+
+
+lbl: @boots
+
+if: eq(sevzip,7) jmp: @boots
+
+import(macross,universal-ops,bare-metal)
+
+shooting := reg();
+kill-tower := var-raw(tower1)
+
+sensor := macross(target class): asem(word sensor return getter target getter class);
+
+shooting = sensor(kill-tower,@shooting);
+print(shooting)
+
+void();
+
+//if( eq())
+
+import: universal-ops macross debugging
+
+a := child-scope(
+    b := 7
+    macross(): dump-scope();
+)
+
+cmp-print: a();
+
+
+//cell := macross(cell,key): macross-complex( cell-get(cell,key), value, cell-set(cell,key,value) );
+import: universal-ops macross bare-metal
+
+add := macross(a,b): asem: word op word add return getter a getter b
+
+cell1 := var-raw(cell1)
+
+m := cell(cell1,0)
+l := add(2 2);
+
+print: l " is " m
+
+void()

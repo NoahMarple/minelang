@@ -1,0 +1,33 @@
+import: mindustry universal-ops macross bare-metal
+
+get-player := macross(tower): asem: word radar word ally word ground word any word distance getter tower word 1 return
+and := macross(a,b): asem: word op word and return getter a getter b
+or := macross(a,b): asem: word op word or return getter a getter b
+set-enabled := macross(thing,state): asem: word control word enabled getter thing getter state
+
+//top
+towerTL := var-raw(scorch3)
+towerTR := var-raw(scorch4)
+
+//bottom
+towerBL := var-raw(scorch5)
+towerBR := var-raw(scorch6)
+
+door := var-raw(door1)
+
+set-enabled(door,and(
+    or(
+        get-player(towerTL)
+        get-player(towerTR)
+    )
+    or(
+        get-player(towerBL)
+        get-player(towerBR)
+    )
+    
+))
+
+
+//print: sensor(var-raw(switch1),@enabled);
+
+

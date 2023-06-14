@@ -1,0 +1,27 @@
+cmp-print("hello world")
+
+import: universal-ops macross bare-metal
+print-flush := macross(target): asem(word printflush getter target)
+add := macross(a,b): asem: word op word add return getter a getter b
+
+
+true := var-raw(true)
+false := var-raw(false)
+
+
+inited := var-raw(inited)
+counter := var-raw(count)
+
+if( eq(inited,false), (
+
+inited = true
+counter = 0
+
+))
+
+counter = add(counter 1)
+
+print: "hello world " counter 
+print-flush: var-raw(message1)
+
+asem: word end

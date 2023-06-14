@@ -1,0 +1,6 @@
+import(macross,universal-ops,bare-metal)
+
+parent-scope(
+    sensor := macross(target class): asem(word sensor return getter target getter class)
+    print-flush := macross(target): asem(word printflush getter target)
+)

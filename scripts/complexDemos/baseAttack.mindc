@@ -1,0 +1,86 @@
+import: universal-ops macross bare-metal mindustry
+
+true := var-raw(true);
+false := var-raw(false);
+null := var-raw(null);
+
+
+add := macross(a,b): asem: word op word add return getter a getter b
+or := macross(a,b): asem: word op word or return getter a getter b
+setEnabled := macross(target state): asem: word control word enabled getter target getter state 
+getEnabled := macross(target): sensor(target @enabled)
+announceFlush := macross(time): asem: word message word announce getter time
+missionFlush := macross(): asem: word message word mission word 3
+explosion := macross(team x y radius damage air ground pierce)(
+	 asem: word explosion getter team getter x getter y getter radius getter damage getter air getter ground getter pierce
+)
+setBlock := macross(block x y placer rotation): asem: word setblock word block getter block getter x getter y getter placer getter rotation
+removeBlock := macross(x y): setBlock(@air x y @derelict 0)
+
+@myTeam = @crux
+@myTeamName = "Crux"
+@raidProcessor = var-raw(processor1)
+@defeatDamagerTeam = @derelect
+
+detectorNode := var-raw(node1)
+detectorSource := var-raw(source1)
+detectorStopgap := var-raw(wall1)
+
+
+@raid-start := globalz()
+
+lbl: @init
+setEnabled(@raidProcessor false)
+child-scope(	
+	//the tests are failing and always jumping to testFail
+	//mabe its the @powerNetOut
+	testFail := @raid-start
+	lbl: loop
+	asem: word wait getter 0.5
+	breakLoop := or(
+		sensor(detectorNode @dead)
+		or(
+			sensor(detectorSource @dead)
+			sensor(detectorStopgap @dead)
+		)
+	)
+	asem(
+		word jump, getter testFail, word equal,
+		getter breakLoop, getter false
+	)
+
+	asem(
+		word jump, getter loop, word strictEqual,
+		getter sensor(detectorNode @powerNetOut), getter null
+	)
+
+	asem(
+		word jump, getter testFail, word always
+	)
+)
+
+lbl: @raid-start
+setEnabled(@raidProcessor true)
+print: @myTeamName " is starting an attack"
+announceFlush(3)
+print: @myTeamName " is attacking!"
+missionFlush()
+setEnabled(@raidProcessor true)
+
+wait 10
+
+lbl: @raid-defeat
+print: @myTeamName "'s base has been overcome!"
+announceFlush(3) 
+missionFlush() //reset mission text
+
+explosion(@defeatDamagerTeam @thisx @thisy 1000 5 true true false)
+explosion(@defeatDamagerTeam @thisx @thisy 50 1000 true true false)
+explosion(@defeatDamagerTeam @thisx @thisy 20 10000 true true true)
+
+//remove undamagables
+
+removeBlock(sensor(@raidProcessor @x) sensor(@raidProcessor @y))
+
+//effective `asem: word stop`
+removeBlock(@thisx @thisy)
