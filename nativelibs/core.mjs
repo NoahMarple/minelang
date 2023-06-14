@@ -134,5 +134,7 @@ export function installBiliLib(engine){
         tok.isInitlised = true;
         tok.name = `${k}@corelib`
     }
+    engine.currentScope.parent.vars.set("true",new BiliRawVar(engine,true))
+    engine.currentScope.parent.vars.set("false",new BiliRawVar(engine,false))
 }
 
