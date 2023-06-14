@@ -1,0 +1,18 @@
+//FAILURE! init is wrong, needs to clear the code output instead
+import: admin bare-metal debugging universal-ops macross
+
+
+//disable whatever was planned
+cmp-flag-set("doLast",new-set());
+
+compileTarg := macross(name,behavor)(
+    cmp-action("init","");
+    cmp-action("cmp","core");
+    behavor();
+    cmp-action("bake","");
+    cmp-print: name
+    cmp-action("output-screen","");
+)
+
+
+compileTarg: "foof" macross(): print: "hi"
