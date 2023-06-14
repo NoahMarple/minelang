@@ -1,1 +1,55 @@
 import: universal-ops macross bare-metal mindustry debugging
+
+
+set-enabled := macross(thing,state): asem: word control word enabled getter thing getter state
+
+button-next := var-raw: button1
+await-next := macross()(
+    child-scope(
+        lbl: loopTop
+        pressed := sensor(button-next, @enabled)
+        asem: word jump getter loopTop word equal getter pressed getter true
+        set-enabled(button-next true)        
+    )
+)
+
+
+
+print: "ready to test..."
+await-next()
+
+print: "stack from imports:\n" dump-scope()
+await-next()
+
+
+print: "testing globals:\n"
+print: "true= [red]" true " false= [red]" false "[]\n"
+
+await-next()
+
+child-scope(
+    print: "testing globalz"
+    anonGZ := globalz() 
+    print: "anon globalz " anonGZ
+
+    namedGZ := globalz(helloImGlobalz)
+    print: "named globalz " namedGZ
+
+    print: "implicit  globalz" @implicitGZ
+)
+await-next()
+
+print: "testing lang fetures"
+
+print: "implicit call with..." "implicit joiner\n"
+print ("exlicit call with..." "implicit joiner\n")
+
+
+print: "implicit call with...", "explicit joiner\n"
+print ("exlicit call with...", "explicit joiner\n")
+
+
+print: "implicit call..."; "orphaned text\n"
+print ("exlicit call..."; "harsh joiner\n")
+
+await-next()
