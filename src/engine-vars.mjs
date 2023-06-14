@@ -9,10 +9,6 @@ let TOKEN_WRITE_VOID;
 new Flag("token-writeVoid").defaultTo(`write-void`).addSetterWatch(v=>TOKEN_WRITE_VOID=v);
 
 
-export class BiliAssignmentDemand {
-    //UNUSED? DEPRICATE
-}
-
 export class BiliVar {
     isInitlised = false; isWriteOpened = false; isReadOpened = false; birthLine = null; deathLine = null;
     readTimes = 0; writeTimes = 0;
@@ -153,6 +149,8 @@ export class BiliRawVar extends BiliVar {
         return undefined;
     }
 }
+
+
 
 export const VAR_NULL = {
     readTimes: 0,
