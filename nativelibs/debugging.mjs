@@ -70,7 +70,7 @@ const installme = {
 
         return assignTo;
     },
-    ["cmp-dumpName"](engine, astBlock, assignTo) {
+    ["dump-name"](engine, astBlock, assignTo) {
         console.log(...astBlock.body.forEach(e => e.name))
     },
     ["dump-scope"](engine, astBlock, assignTo) {
